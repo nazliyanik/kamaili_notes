@@ -52,6 +52,7 @@ Transaction = 1 request+ 1 response
 
 ► Statefull----->>>>>> o anki tüm çağrıları aklında tut, hangi asterisk'e yolladığını aklına tutar.
 
+
 · Kamailio 'da IP Autentication yapabilirsin.
 
 · Trusted IP de güvenli ip aralığı sağlar.
@@ -75,9 +76,6 @@ Distributed Location, HTABLE ,more
 
 
 
-
-
-
 · Kamailio SIP proxydir.
 
 · Kamailio secure media yapar.
@@ -87,11 +85,7 @@ Distributed Location, HTABLE ,more
 · Srtp-tls-secure ıp
 
 
-
-
 LoadBalancer
-
-
 
 Kamailio çağrıyı asterisklere dağıtır.
 
@@ -104,12 +98,10 @@ Kamailio arkadaki asteriskin durumlarını kontrol eder.
 · Stateless HA
 
 --Çağrı bilgilerini 2. bir kamailio ile paylaşmak.
+
 ---ortak bir database de çağrı bilgilerini tutmak
 
 DNS ile GEO Yedeklilik
-
-
-
 
 Dns 'e 2 ip veriyorsun birinde sorun çıktığı zaman ona artık çağrı gönderilmiyor, DNS de 2 ip tanımlı GEO-AKTİF-AKTİF
 
@@ -117,7 +109,7 @@ Kamailio CFG
 
 · Global parameters
 
-Modul bazlı değil sadece kamailio için verilen parametreler.
+  Modul bazlı değil sadece kamailio için verilen parametreler.
 
 · Loading modules
 
