@@ -1,0 +1,349 @@
+SIP Express Router(SER)
+
+OpenSER --------///---->>> Kamailio
+
+Kamailio.cfg de konfigürasyona bakar.
+
+Kamailio -SER şuan devam ediyor.
+
+Trunk= gövde demek bir kanal üzerinden birden fazla çağrı gitmesidir.
+
+webrtc=websoket=tcp  ---->>>> browserdan call yapabilmektir.
+
+
+	► IP-TO-IP SIP Trunk   
+	► ıp-port-kodec
+	                                                                               
+Registration -SIP
+
+	► WEBRTC Gateway
+
+Kamailio çağrılara istediğin iplere dağıtır.
+
+· STUN Server NAT 'ı destekler. 
+
+· Clientin public ipsini bilir ve client public ipsini (stundan aldığı IP 'yi Kamailio'ya yollar.)
+
+· Kamailio C ile yazılmıştır.
+
+Hızlı ve basit 
+
+
+
+Kamailio bir sıraya göre çalışıyor..
+
+Security ---->>> pike modulü
+
+Önce modulü yükle
+
+Daha sonra parametre ekle ----- parametrede ne yapmak istediğini belirle
+
+Daha sonra scriptte fonksiyonlar ile kamailio' nun nasıl çalışması gerektiğini söyleyen kısmı yaz.
+
+Call-ıd değişir.
+
+PIKE Modulu ------ Aynı anda çok fazla INVITE gelirse 750 (cps) den fazla gelirse blokla.
+
+Diyalog- INVITE- 200 ok arası
+
+Transaction = 1 request+ 1 response
+
+► Stateless ----->>>>> aklında tutma, direk yolla 5000 call setups/sec
+
+► Statefull----->>>>>> o anki tüm çağrıları aklında tut, hangi asterisk'e yolladığını aklına tutar.
+
+· Kamailio 'da IP Autentication yapabilirsin.
+
+· Trusted IP de güvenli ip aralığı sağlar.
+
+· Autentication kamailio-db arası
+
+· Distributed sharing ------>>>> birden fazla kamailio adresin olsun
+
+· DNS ile 2 tane kamailio ile yedeklilik aktif-aktif yapabilirsin
+
+· Session olayı var, 
+
+-------------------------
+Kamailio Security
+
+High Availability
+
+Failover / Redundancy 
+
+Distributed Location, HTABLE ,more
+
+
+
+
+
+
+· Kamailio SIP proxydir.
+
+· Kamailio secure media yapar.
+
+· Transport katmanında değişiklik yapar.
+
+· Srtp-tls-secure ıp
+
+
+
+
+LoadBalancer
+
+
+
+Kamailio çağrıyı asterisklere dağıtır.
+
+Kamailio arkadaki asteriskin durumlarını kontrol eder.
+
+2 tip HA var.
+
+· Device yedekliliği yapmak
+
+· Stateless HA
+
+--Çağrı bilgilerini 2. bir kamailio ile paylaşmak.
+---ortak bir database de çağrı bilgilerini tutmak
+
+DNS ile GEO Yedeklilik
+
+
+
+
+Dns 'e 2 ip veriyorsun birinde sorun çıktığı zaman ona artık çağrı gönderilmiyor, DNS de 2 ip tanımlı GEO-AKTİF-AKTİF
+
+Kamailio CFG
+
+· Global parameters
+
+Modul bazlı değil sadece kamailio için verilen parametreler.
+
+· Loading modules
+
+· Module parameters
+
+· Routing blocks (eg. Request_route{…},reply_route{…}, branch_route{…..}
+
+
+Kamailio CFG
+ 
+	· Global parameters
+	· Loading parameters
+	· Module parameters
+	· Routing blocks (eg., request_route
+ 
+Bir modulü kullanmak istiyorsan modulü yükle, modulü parametreleri ile kullan,
+ 
+Her modulün kendine özel parametreleri var.
+ 
+
+
+Transport layerden bir paket gelir.
+ 
+Reasonu yazabilirsin. 
+ 
+UDP/TCP/TLS/SCTP
+ 
+Hangi IP ve protokol ile paket geldi (l4)
+ 
+Layer 7 'ye bu paket geldiğinde 
+ 
+Invıte ----requesttir.
+ 
+183/100 bir response
+ 
+Ahize kalktığı zaman 200 ok gelir.
+ 
+ACK bir requesttir.
+ 
+BY requesttir.
+ 
+Kamailio
+ 
+Kamailio'yu nasıl ayarladıysan öyle davranır.
+ 
+500 cause code --->>> server ile ilgilidir.
+ 
+Kamailio'ya ilk gelen INVITE önemlidir. Ona göre karar verecek,
+ 
+ 
+INVITE >>>> EXECUTE ROUTE (yani routing bloğuna girecek)
+ 
+Kamailio call'u nereye göndereceğini branch ID 'den bilir.
+ 
+Bir hata ile karşılaştıysan , failure mekanizması var ise;  çalıştırır.
+ 
+Branch I aklında tut, daha sonra çalıştır.
+
+ 
+
+ KAMAİLİO MODULLER
+ 
+	· Aşağıdakiler Kamailio Modulleridir.
+ 
+	· ACL network layerda engellemek, paketi al source ıp yı görünce engelle.
+ 
+	· SRTP ---------->>>> Secure IP 'dir.
+ 
+	· SRV DNS-----DNS de tanımlı 2 ip var, yedekteki ip ye gitme.
+ 
+	· 
+	· Topology hiding
+	· Topoh.so modulu---->>>> ıpleri gizleme
+	 
+	· XMLRPC ile kontrol edebilme
+      Kamailio da değişiklik yaptırma
+ 
+	· LCR 
+	· Least Cost Route ----fiyata göre
+ 
+
+ 
+ 
+Kamailio sinyalleşme kısmını handle eder.
+ 
+Kamailio ile RTP Engine RTP için port ayarlaması yapar.
+ 
+Rport nedir?
+ 
+Via da kullanılır Nat için kullanılır.
+ 
+Received port ------>>>>Hangi source dan ipnin geldiğini göster.
+ 
+Max forward header----çağrılar loopa girdiğinde;
+ 
+Çok fazla hop varsa çağrı için çağrıyı sonlandırmak için;
+ 
+483 Too Many Hops döner..
+ 
+---------------------------------------------
+NAT_DETECT
+ 
+Modul yukarıda aktifleştirilmiş olmalı,
+ 
+Gelen requestin NAT ın arkasında mı değil mi ? Bir firewallun arkasında mı ?
+ 
+Eğer method register ise;
+ 
+Eğer method ınvıte ise;
+ 
+ 
+NAT_UAC_TEST-----eğer method registersa 
+ 
+
+ 
+Set_contact_alias--------->>>>> aklında tut
+ 
+To da tag varsa bu bir ın-diyalogdur.
+ 
+To tag var ise okey
+ 
+Birinci ınvite da to tag yok.
+ 
+In diyalog için ----Diyalogun içinde olup olmadığını anlamak için tag e bak.
+ 
+Aynı transtaiona bakmak için branch e bak
+ 
+ 
+Aynı diyalog içinde tüm brachler aynıdır.
+ 
+Ack yeni bir requesttir.
+ 
+Refer headerı bir çağrıyı transfer etmek için kullanılır.
+ 
+200 ler positive requesttir
+ 
+To tag yok ise geri gönder.
+ 
+Via response u  nereye göndereceğini gösterir.
+ 
+ 
+Journalctl -u kamailio
+ 
+
+
+ https://kamailio.org/docs/tutorials/devel/kamailio-install-guide-deb/
+
+Kurulumu Debian 'a yapmak mantıklı
+
+Debian 'un repolarında Kamailio var.
+
+APT Install Commands
+The apt tool is used for installing the packages. First run the update command to sync with the remote repository, then install MySQL server, Kamailio core and mysql packages.
+apt update
+apt install default-mysql-server
+apt install kamailio kamailio-mysql-modules
+
+Once the above commands are finished, you can check if kamailio application is available:
+which kamailio
+
+There are many Kamailio packages specific for various modules. You can see all available with:
+apt search kamailio
+
+For example, to be able to load websocket module, you have to install the package kamailio-websocket-modules:
+apt install kamailio-websocket-modules
+
+
+Kamailio Control Tools
+
+
+	► Kamctlrc
+	► Kamdbctl
+
+
+/etc/kamailio/kamctlrc
+
+Kendi üstüne kamailionun database ini kurduğumuz için localhost ve mysql 'i aktif ediyoruz.
+
+
+
+
+Modulü aktifleştir
+
+
+
+
+
+Kamdbctl
+
+Kam db kontrol
+
+Database tabloları kur
+
+Utf32 de kullanırız
+
+Show database;
+
+Use kamailio;
+
+Kamdbctl create   
+ 
+ 
+Kamailionun tabloları kurar.
+ 
+Mysql karakter için de utf32 yada latin1 'i seç.
+ 
+#CHARSET="latin1"
+ 
+Debug mode=3 yeterli
+ 
+Kamailio Alias
+ 
+
+ 
+Kamailio restart edildiğinde eğer çağrı kurulmuşsa çağrıya bsey olmaz
+ 
+Transection tamamlanmamışsa call kurulmaz.
+ 
+Netstat -tulpn | grep kama -------->>>> dinlediği portları görürsün.
+
+
+
+
+
+
+
+
+
+
